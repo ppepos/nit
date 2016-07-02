@@ -1,0 +1,21 @@
+digraph g {
+rankdir=LR;
+node[shape=Mrecord,height=0];
+s0 [label="0 Start|_start::Start=.document Eof\l|document::document_0=.node+\lnode+::node+_one=.node\lnode::node_0=.text\lnode::node_1=.var_tag\lnode+::node+_more=.node+ node\ldocument::document_1=.\l",color=blue];
+s0 -> s1 [label="document"];
+s0 -> s2 [label="node+"];
+s0 -> s3 [label="node"];
+s0 -> s4 [label="text"];
+s0 -> s5 [label="var_tag"];
+s1 [label="1 document|_start::Start= document.Eof\l|"];
+s1 -> s6 [label="Eof"];
+s2 [label="2 node+|document::document_0= node+.\lnode+::node+_more= node+.node\l|node::node_0=.text\lnode::node_1=.var_tag\l",color=blue];
+s2 -> s7 [label="node"];
+s2 -> s4 [label="text"];
+s2 -> s5 [label="var_tag"];
+s3 [label="3 node|node+::node+_one= node.\l|"];
+s4 [label="4 text|node::node_0= text.\l|"];
+s5 [label="5 var_tag|node::node_1= var_tag.\l|"];
+s6 [label="6 document Eof|_start::Start= document Eof.\l|"];
+s7 [label="7 node+ node|node+::node+_more= node+ node.\l|"];
+}

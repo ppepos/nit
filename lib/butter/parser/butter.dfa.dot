@@ -1,0 +1,32 @@
+digraph g {
+s0[shape=oval,label=""];
+s0->s1 [label="#9 .. #10\n#13\n#32 .. [\n] .. z\n| .. ~"];
+s0->s2 [label="\\"];
+s0->s3 [label="{"];
+s1[shape=oval,color=blue,label="text\n"];
+s1->s1 [label="#9 .. #10\n#13\n#32 .. [\n] .. z\n| .. ~"];
+s1->s2 [label="\\"];
+s1->s9 [label="{"];
+s2[shape=oval,color=blue,label="text\n"];
+s2->s1 [label="#9 .. #10\n#13\n#32 .. [\n] .. ~"];
+s2->s2 [label="\\"];
+s3[shape=oval,label=""];
+s3->s1 [label="#9 .. #10\n#13\n#32 .. z\n| .. ~"];
+s3->s4 [label="{"];
+s4[shape=oval,label=""];
+s4->s4 [label="#9 .. #10\n#13\n#32"];
+s4->s5 [label="0 .. 9\nA .. Z\n_\na .. z"];
+s5[shape=oval,label=""];
+s5->s6 [label="#9 .. #10\n#13\n#32"];
+s5->s5 [label="0 .. 9\nA .. Z\n_\na .. z"];
+s5->s7 [label="}"];
+s6[shape=oval,label=""];
+s6->s6 [label="#9 .. #10\n#13\n#32"];
+s6->s7 [label="}"];
+s7[shape=oval,label=""];
+s7->s8 [label="}"];
+s8[shape=oval,color=blue,label="var_tag\n"];
+s9[shape=oval,label=""];
+s9->s1 [label="#9 .. #10\n#13\n#32 .. z\n| .. ~"];
+empty->s0; empty[label="",shape=none];
+}

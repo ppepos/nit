@@ -1,0 +1,80 @@
+Grammar butter;
+
+/*****************************************************************************/
+Lexer
+/*****************************************************************************/
+
+tab = '\t';
+cr = '\n';
+lf = '\r';
+eol_helper = cr lf | cr | lf; // This takes care of different platforms;
+eol = eol_helper;
+
+blank = (' ' | tab | eol)+;
+
+all =  ('!' .. '~') | blank;
+
+lowercase = 'a' .. 'z';
+uppercase = 'A' .. 'Z';
+digit = '0' .. '9';
+letter = lowercase | uppercase | digit | '_';
+
+colon = ':';
+comma = ',';
+obrace = '{';
+cbrace = '}';
+opar = '(';
+cpar = ')';
+odbrace = '{{';
+cdbrace = '}}';
+percent = '%';
+obraper = '{%';
+cbraper = '%}';
+
+text =
+	(
+		(all - '{' - '%')+
+		| (all (all - '{' - '%'))+
+		| ((all - '{' - '%')* ('\\' all)+)+
+	)+;
+
+variable = letter+;
+
+kwend = 'end';
+kwfor = 'for';
+kwin = 'in';
+kwtemplate = 'template';
+
+/*****************************************************************************/
+Parser
+/*****************************************************************************/
+Ignored blank;
+
+document = signature? nodes;
+
+signature = obraper kwtemplate [name]:variable params? cbraper;
+
+params = opar param_decl params_cont* cpar;
+
+params_cont = comma param_decl;
+
+param_decl = variable param_decl_cont* colon variable;
+param_decl_cont = comma variable;
+
+nodes = node*;
+
+node
+	= var_tag
+	| for_block;
+
+for_block
+	= for_tag_open nodes for_tag_close ;
+
+var_tag
+	= odbrace [var]:variable cdbrace;
+
+for_tag_open
+	= obraper kwfor variable kwin variable cbraper;
+
+for_tag_close
+	= obraper kwend kwfor cbraper;
