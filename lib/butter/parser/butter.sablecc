@@ -1,0 +1,51 @@
+Grammar butter;
+
+/*****************************************************************************/
+Lexer
+/*****************************************************************************/
+
+tab = '\t';
+cr = '\n';
+lf = '\r';
+eol_helper = cr lf | cr | lf; // This takes care of different platforms;
+eol = eol_helper;
+
+blank = (' ' | tab | eol)+;
+
+all =  ('!' .. '~') | blank;
+
+lowercase = 'a' .. 'z';
+uppercase = 'A' .. 'Z';
+digit = '0' .. '9';
+letter = lowercase | uppercase | digit | '_';
+
+text
+	= (
+		(all - '{' - '%')+
+		| (all (all - '{' - '%'))+
+		| ((all - '{' - '%')* ('\\' all)+)+
+	)+;
+
+
+variable = letter+;
+
+var_tag = '{{' blank? variable blank? '}}';
+for_tag_open = '{%' blank? 'for' blank variable blank 'in' blank variable blank? '%}' ;
+for_tag_close = '{%' blank? 'endfor' blank? '%}' ;
+
+
+/*****************************************************************************/
+Parser
+/*****************************************************************************/
+
+nodes = node*;
+
+node
+	= text
+	| var_tag
+	| for_block ;
+
+for_block
+	= for_tag_open nodes for_tag_close ;
+
+
